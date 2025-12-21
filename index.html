@@ -13,6 +13,7 @@
       --hairline: rgba(255,255,255,.12);
       --glass: rgba(10,10,12,.35);
       --glass-strong: rgba(10,10,12,.68);
+      --gold: #c8a85a;
       --blur: 14px;
       --radius: 18px;
       --max: 1180px;
@@ -56,9 +57,10 @@
       width: min(var(--max), 100% - 2*var(--pad));
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: 18px;
+      position: relative;
     }
 
     .brand {
@@ -69,9 +71,8 @@
     }
     .logo-mark{
       width: 28px; height: 28px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(255,255,255,.35));
-      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+      display: block;
+      object-fit: contain;
     }
     .brand span{
       letter-spacing: .02em;
@@ -79,26 +80,162 @@
       opacity: .92;
     }
 
+    /* Floating pill nav + dropdowns */
     .nav {
       display: none;
-      gap: 18px;
       justify-content: center;
+      align-items: stretch;
+      justify-self: center;
+    }
+    .nav-pill{
+      position: relative;
+      display: inline-flex;
       align-items: center;
-      padding: 10px 14px;
+      padding: 10px 18px;
       border-radius: 999px;
-      border: 1px solid var(--hairline);
-      background: rgba(0,0,0,.18);
+      background: transparent;
+      border: 1px solid transparent;
+      gap: 8px;
+      transition: background-color .28s ease, border-color .28s ease, box-shadow .28s ease, backdrop-filter .28s ease;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      width: fit-content;
     }
-    .nav a{
+    .nav-pill:hover,
+    .nav-pill:focus-within{
+      background: rgba(0,0,0,.86);
+      border-color: var(--gold);
+      box-shadow: 0 10px 35px rgba(0,0,0,.28), 0 0 0 1px rgba(200,168,90,.12);
+    }
+    .nav-list{
+      list-style: none;
+      display: flex;
+      gap: 6px;
+      padding: 0;
+      margin: 0;
+    }
+    .nav-item{
+      position: relative;
+    }
+    .has-submenu::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 16px;
+    }
+    .nav-link{
       font-size: 14px;
-      opacity: .86;
-      padding: 8px 10px;
+      padding: 9px 14px;
       border-radius: 999px;
-      transition: opacity .2s ease, background-color .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      opacity: .94;
+      transition: color .22s ease, background-color .22s ease, text-shadow .22s ease;
     }
-    .nav a:hover{ opacity: 1; background: rgba(255,255,255,.07); }
+    .nav-link:hover,
+    .nav-link:focus-visible{
+      color: var(--gold);
+      text-shadow: 0 0 14px rgba(200,168,90,.35);
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+    .nav-link:focus-visible{
+      box-shadow: 0 0 0 2px rgba(200,168,90,.55);
+    }
+
+    .mobile-menu{
+      top: calc(100% + 10px);
+      right: 0;
+      left: auto;
+      min-width: 220px;
+      display: grid;
+      gap: 4px;
+      transform: translateY(8px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .mobile-menu .submenu-link{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 8px;
+    }
+    .mobile-menu.is-open{
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .submenu{
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translate(-50%, 8px);
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(0,0,0,.92);
+      border: 1px solid var(--gold);
+      border-radius: 14px;
+      box-shadow: 0 20px 45px rgba(0,0,0,.38), 0 0 0 1px rgba(200,168,90,.12);
+      padding: 12px;
+      min-width: 220px;
+      display: grid;
+      gap: 4px;
+      transition: opacity .22s ease, transform .22s ease;
+      z-index: 10;
+    }
+    .has-submenu:hover > .submenu,
+    .has-submenu:focus-within > .submenu,
+    .has-submenu.is-open > .submenu{
+      opacity: 1;
+      transform: translate(-50%, 0);
+      pointer-events: auto;
+    }
+    .mobile-menu.submenu{
+      left: auto;
+      right: 0;
+      transform: translateY(8px);
+    }
+    .mobile-menu.submenu::before{
+      left: auto;
+      right: 18px;
+      transform: none;
+    }
+    .submenu::before{
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      width: 18px;
+      height: 12px;
+      transform: translateX(-50%);
+      background: transparent;
+    }
+    .submenu-link{
+      color: var(--text);
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border-left: 2px solid transparent;
+      transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .submenu-link:hover,
+    .submenu-link:focus-visible{
+      color: var(--gold);
+      background: rgba(255,255,255,.05);
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 1px rgba(200,168,90,.18);
+      outline: none;
+    }
+    .submenu a:focus-visible{
+      outline: 2px solid rgba(200,168,90,.65);
+      outline-offset: 2px;
+    }
 
     .header-actions{
       display: inline-flex;
@@ -140,6 +277,8 @@
       padding: 0;
       display: inline-grid;
       place-items: center;
+      background: transparent;
+      border-color: transparent;
     }
     .hamburger .lines{
       width: 18px; height: 12px;
@@ -160,7 +299,7 @@
     .hamburger .lines::after{ bottom: 0; opacity: .75; }
 
     /* Desktop nav breakpoint */
-    @media (min-width: 980px){
+    @media (min-width: 769px){
       .nav{ display: inline-flex; }
       .hamburger{ display: none; }
     }
@@ -180,22 +319,81 @@
       inset: 0;
       z-index: 0;
       background: #0f0f12;
+      overflow: hidden;
     }
 
-    .hero-media video,
-    .hero-media img{
+    .hero-video-bg{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .hero-video{
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       transform: scale(1.03);
       filter: saturate(1.05) contrast(1.02);
+      opacity: 0;
+      transition: opacity 1.15s ease;
+      background: #0f0f12;
     }
 
-    /* If user prefers reduced motion, hide video and show poster. */
-    .hero-media img{ display: none; }
+    .hero-video.is-active{
+      opacity: 1;
+      z-index: 1;
+    }
+    .hero-video.is-idle{
+      opacity: 0;
+      z-index: 0;
+    }
+
+    .hero-video-overlay{
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.65));
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: normal;
+    }
+
+    .hero-poster{
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(255,255,255,.05), transparent 55%),
+        linear-gradient(140deg, #101017 0%, #050507 48%, #0b0b0c 100%);
+      transform: scale(1.03);
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    .video-bg--disabled .hero-video-bg{
+      display: none;
+    }
+    .video-bg--disabled .hero-poster{
+      opacity: 1;
+    }
+
     @media (prefers-reduced-motion: reduce){
-      .hero-media video{ display: none; }
-      .hero-media img{ display: block; }
+      .hero-video-bg{ display: none; }
+      .hero-poster{ opacity: 1; }
+      .nav-pill,
+      .nav-link,
+      .submenu{
+        transition: none;
+        transform: none !important;
+      }
+      .reveal{
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
     }
 
     /* Overlay gradient to keep text readable */
@@ -270,87 +468,181 @@
       50%{ transform: scale(1.05); opacity: 1; }
     }
 
-    /* ===== Mobile Drawer ===== */
-    .drawer-backdrop{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 60;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease;
+    /* Mobile primary menu */
+    .mobile-menu{
+      position: absolute;
+      z-index: 20;
     }
-    .drawer{
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      left: 12px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.16);
-      background: var(--glass-strong);
-      backdrop-filter: blur(var(--blur));
-      -webkit-backdrop-filter: blur(var(--blur));
-      z-index: 61;
-      transform: translateY(-12px);
-      opacity: 0;
-      pointer-events: none;
-      transition: transform .22s ease, opacity .22s ease;
-      padding: 14px;
-    }
-    .drawer .row{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-      margin-bottom: 10px;
-    }
-    .drawer nav{
-      display: grid;
-      gap: 8px;
-      padding: 6px 0 10px;
-    }
-    .drawer nav a{
-      padding: 12px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-    }
-    .drawer nav a:hover{ background: rgba(255,255,255,.07); }
-    .drawer .actions{
-      display: grid;
-      gap: 10px;
-      grid-template-columns: 1fr 1fr;
-    }
-    .drawer .actions .btn{ width: 100%; }
-
-    .is-open .drawer-backdrop{
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .is-open .drawer{
-      transform: translateY(0);
-      opacity: 1;
-      pointer-events: auto;
+    @media (max-width: 768px){
+      .header-inner{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .header-inner .nav{
+        display: none;
+      }
+      .header-actions{
+        justify-content: flex-end;
+      }
     }
 
-    /* Demo page content below hero */
+    /* Experience section */
     main{
-      padding: 70px var(--pad);
-      width: min(var(--max), 100%);
+      padding: 80px var(--pad);
+      width: min(var(--max), 100% - 2*var(--pad));
       margin: 0 auto;
-      color: rgba(255,255,255,.78);
-      line-height: 1.6;
+      color: rgba(255,255,255,.9);
     }
-    .card{
+    .anchor-target{
+      display: block;
+      height: 0;
+      scroll-margin-top: calc(var(--header-h) + 16px);
+    }
+    .section-heading{
+      display: grid;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .section-heading h2{
+      margin: 0;
+      font-size: clamp(28px, 3.6vw, 40px);
+      letter-spacing: -0.01em;
+    }
+    .section-heading p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 16px;
+      max-width: 720px;
+    }
+    .experience-grid{
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .experience-card{
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
-      border-radius: 20px;
-      padding: 22px;
-      margin: 0 0 18px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 14px 45px rgba(0,0,0,.28);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+    .experience-card img{
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.05);
+    }
+    .experience-card .card-body{
+      padding: 16px 18px 18px;
+      display: grid;
+      gap: 8px;
+    }
+    .experience-card h3{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: .01em;
+    }
+    .experience-card p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .experience-card:hover,
+    .experience-card:focus-within{
+      transform: translateY(-4px);
+      border-color: rgba(200,168,90,.38);
+      box-shadow: 0 18px 52px rgba(0,0,0,.34), 0 0 0 1px rgba(200,168,90,.16);
+    }
+    .experience-cta{
+      display: flex;
+      justify-content: center;
+      margin: 36px auto 8px;
+    }
+    .btn.book-now{
+      background: var(--gold);
+      color: #0b0b0c;
+      border-color: rgba(200,168,90,.65);
+      height: 46px;
+      padding: 0 22px;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(0,0,0,.32), 0 0 0 1px rgba(200,168,90,.28);
+      text-shadow: 0 1px 0 rgba(0,0,0,.18);
+    }
+    .btn.book-now:hover{
+      background: #d6b96c;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(0,0,0,.34), 0 0 0 1px rgba(200,168,90,.38);
+    }
+    .btn.book-now:focus-visible{
+      outline: 2px solid rgba(200,168,90,.72);
+      outline-offset: 3px;
+    }
+    .section-divider{
+      width: min(860px, calc(100% - 2*var(--pad)));
+      height: 1px;
+      background: rgba(200,168,90,.28);
+      border: none;
+      margin: 44px auto 20px;
+    }
+
+    .reveal{
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .62s cubic-bezier(.19, .7, .3, 1), transform .62s cubic-bezier(.19, .7, .3, 1);
+    }
+    .reveal.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 80px;
+      background: var(--bg);
+      color: var(--muted);
+      padding: 48px var(--pad) 56px;
+    }
+    .footer-inner{
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 28px;
+    }
+    .footer-grid{
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .footer-title{
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+      color: rgba(244,244,245,.64);
+    }
+    .footer-list{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .footer-list a{
+      color: inherit;
+    }
+    .footer-list a:hover,
+    .footer-list a:focus-visible{
+      color: var(--gold);
+      outline: none;
     }
   </style>
 </head>
@@ -360,92 +652,183 @@
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
       <a class="brand" href="#">
-        <div class="logo-mark" aria-hidden="true"></div>
-        <span>Your Brand</span>
+        <img class="logo-mark" src="img/RNtransparent.png" alt="Rosé Noir logo" />
+        <span>Rosé Noir</span>
       </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="#products">Products</a>
-        <a href="#templates">Templates</a>
-        <a href="#resources">Resources</a>
-        <a href="#pricing">Pricing</a>
+      <nav class="nav nav-pill" aria-label="Primary">
+        <ul class="nav-list">
+          <li class="nav-item has-submenu">
+            <a class="nav-link" href="#about" aria-haspopup="true" aria-expanded="false">About</a>
+            <div class="submenu" role="menu" aria-label="About submenu">
+              <a class="submenu-link" role="menuitem" href="#about-know">Get To Know Us</a>
+              <a class="submenu-link" role="menuitem" href="#about-why">Why Choose Rosé Noir</a>
+              <a class="submenu-link" role="menuitem" href="#about-experience">The Wedding Experience</a>
+              <a class="submenu-link" role="menuitem" href="#about-process">Process</a>
+            </div>
+          </li>
+
+          <li class="nav-item has-submenu">
+            <a class="nav-link" href="#services" aria-haspopup="true" aria-expanded="false">Services</a>
+            <div class="submenu" role="menu" aria-label="Services submenu">
+              <a class="submenu-link" role="menuitem" href="#services-ceremonies">Ceremonies</a>
+              <a class="submenu-link" role="menuitem" href="#services-receptions">Receptions</a>
+              <a class="submenu-link" role="menuitem" href="#services-addons">Add-Ons</a>
+              <a class="submenu-link" role="menuitem" href="#services-custom">Custom Services</a>
+            </div>
+          </li>
+
+          <li class="nav-item has-submenu">
+            <a class="nav-link" href="#portfolio" aria-haspopup="true" aria-expanded="false">Portfolio</a>
+            <div class="submenu" role="menu" aria-label="Portfolio submenu">
+              <a class="submenu-link" role="menuitem" href="#portfolio-ceremony">Ceremony Gallery</a>
+              <a class="submenu-link" role="menuitem" href="#portfolio-reception">Reception Gallery</a>
+              <a class="submenu-link" role="menuitem" href="#portfolio-lighting">Lighting &amp; Visuals</a>
+            </div>
+          </li>
+
+          <li class="nav-item has-submenu">
+            <a class="nav-link" href="#contact" aria-haspopup="true" aria-expanded="false">Contact</a>
+            <div class="submenu" role="menu" aria-label="Contact submenu">
+              <a class="submenu-link" role="menuitem" href="#contact-quote">Request a Quote</a>
+              <a class="submenu-link" role="menuitem" href="#contact-faqs">FAQs</a>
+              <a class="submenu-link" role="menuitem" href="#contact-planning">Planning/Availability</a>
+            </div>
+          </li>
+        </ul>
       </nav>
 
       <div class="header-actions">
-        <a class="btn" href="#login">Log in</a>
         <a class="btn primary" href="#get-started">Get started</a>
 
-        <button class="btn hamburger" id="openMenu" aria-label="Open menu" aria-controls="mobileDrawer" aria-expanded="false">
+        <button class="btn hamburger" id="openMenu" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
           <div class="lines"><span></span></div>
         </button>
       </div>
+
+      <nav class="mobile-menu submenu" id="mobileMenu" aria-label="Mobile menu" role="menu" hidden>
+        <a class="submenu-link" role="menuitem" href="#about">About</a>
+        <a class="submenu-link" role="menuitem" href="#services">Services</a>
+        <a class="submenu-link" role="menuitem" href="#portfolio">Portfolio</a>
+        <a class="submenu-link" role="menuitem" href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
-
-  <!-- Mobile Drawer -->
-  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
-  <section class="drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
-    <div class="row">
-      <div class="brand" style="min-width:auto">
-        <div class="logo-mark" aria-hidden="true"></div>
-        <span>Your Brand</span>
-      </div>
-      <button class="btn" id="closeMenu" aria-label="Close menu">Close</button>
-    </div>
-
-    <nav aria-label="Mobile Primary">
-      <a href="#products">Products</a>
-      <a href="#templates">Templates</a>
-      <a href="#resources">Resources</a>
-      <a href="#pricing">Pricing</a>
-    </nav>
-
-    <div class="actions">
-      <a class="btn" href="#login">Log in</a>
-      <a class="btn primary" href="#get-started">Get started</a>
-    </div>
-  </section>
 
   <!-- Hero -->
   <section class="hero" aria-label="Hero">
     <div class="hero-media" aria-hidden="true">
-      <!-- Use BOTH mp4 and webm if you can. poster is critical for perceived speed. -->
-      <video autoplay muted playsinline loop preload="metadata" poster="assets/hero-poster.jpg">
-        <source src="assets/hero-broll.webm" type="video/webm" />
-        <source src="assets/hero-broll.mp4" type="video/mp4" />
-      </video>
-
-      <!-- Fallback image for reduced-motion users -->
-      <img src="assets/hero-poster.jpg" alt="" />
+      <div class="hero-video-bg" id="heroVideoBg">
+        <video class="hero-video hero-video--a is-idle" muted playsinline preload="metadata"></video>
+        <video class="hero-video hero-video--b is-idle" muted playsinline preload="metadata"></video>
+        <div class="hero-video-overlay"></div>
+      </div>
+      <div class="hero-poster" aria-hidden="true"></div>
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="hero-content">
-      <div class="kicker">Create • Sell • Grow</div>
-      <h1 class="headline">A website makes it real.</h1>
+      <h1 class="headline">The Sound of Forever.</h1>
       <p class="subhead">
-        Build a premium, modern presence with a cinematic hero and a clean, confident header—without the clutter.
+        Elegantly crafted to bring your wedding vision to life.
       </p>
 
       <div class="hero-cta">
         <a class="btn primary" href="#get-started">Get started</a>
-        <a class="btn" href="#learn-more">Explore features</a>
-      </div>
-
-      <div class="scroll-hint">
-        <span class="dot" aria-hidden="true"></span>
-        <span>Scroll for more</span>
+        <a class="btn" href="#learn-more">View Portfolio</a>
       </div>
     </div>
   </section>
 
-  <!-- Demo content -->
-  <main>
-    <div class="card" id="products"><strong>Products</strong><br/>Your sections go here…</div>
-    <div class="card" id="templates"><strong>Templates</strong><br/>Your sections go here…</div>
-    <div class="card" id="resources"><strong>Resources</strong><br/>Your sections go here…</div>
-    <div class="card" id="pricing"><strong>Pricing</strong><br/>Your sections go here…</div>
+  <!-- Experience -->
+  <main id="about">
+    <span class="anchor-target" id="about-know" aria-hidden="true"></span>
+    <span class="anchor-target" id="about-why" aria-hidden="true"></span>
+    <span class="anchor-target" id="about-experience" aria-hidden="true"></span>
+    <span class="anchor-target" id="about-process" aria-hidden="true"></span>
+    <section class="section-heading">
+      <h2>The Rosé Noir Experience</h2>
+      <p>Based in Colorado Springs, CO, Rosé Noir delivers premium wedding DJ services that feel cinematic, guiding every moment from vows to last dance with intentional pacing.</p>
+    </section>
+
+    <div class="anchor-target" id="services"></div>
+    <div class="anchor-target" id="portfolio"></div>
+    <div class="experience-grid">
+      <article class="experience-card" aria-label="Ceremony" id="services-ceremonies">
+        <img src="img/ceremony.webp" alt="Outdoor wedding ceremony with aisle view">
+        <div class="card-body">
+          <h3>Ceremony</h3>
+          <p>For wedding ceremonies, we bring clear audio and discreet microphones so every vow is heard across Colorado Springs wedding venues without distraction.</p>
+        </div>
+      </article>
+
+      <article class="experience-card" aria-label="Reception" id="services-receptions">
+        <img src="img/reception.webp" alt="Wedding reception dance floor with lighting">
+        <div class="card-body">
+          <h3>Reception</h3>
+          <p>Our wedding receptions stay electric, with experienced wedding DJs in Colorado Springs shaping dance floor energy that flows seamlessly through the night.</p>
+        </div>
+      </article>
+
+      <article class="experience-card" aria-label="Creative Elements" id="services-addons">
+        <img src="img/creative.webp" alt="Creative lighting setup for wedding celebration">
+        <div class="card-body">
+          <h3>Creative Elements</h3>
+          <p>From wedding enhancements and lighting to choreographed special moments, we design custom wedding experiences in Colorado Springs, CO that feel personal and luminous.</p>
+        </div>
+      </article>
+    </div>
+    <div class="experience-cta">
+      <a class="btn book-now" href="#contact">Book Now</a>
+    </div>
+    <span class="anchor-target" id="services-custom" aria-hidden="true"></span>
+    <span class="anchor-target" id="portfolio-ceremony" aria-hidden="true"></span>
+    <span class="anchor-target" id="portfolio-reception" aria-hidden="true"></span>
+    <span class="anchor-target" id="portfolio-lighting" aria-hidden="true"></span>
+    <span class="anchor-target" id="contact-quote" aria-hidden="true"></span>
+    <span class="anchor-target" id="contact-faqs" aria-hidden="true"></span>
+    <span class="anchor-target" id="contact-planning" aria-hidden="true"></span>
   </main>
+
+  <div class="section-divider" aria-hidden="true"></div>
+  <span class="anchor-target" id="contact" aria-hidden="true"></span>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div>
+          <h2 class="footer-title">Contact Us</h2>
+          <ul class="footer-list">
+            <li>Rosé Noir</li>
+            <li>Email placeholder</li>
+            <li><a href="#contact-quote">Request a Quote</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-title">Follow Us</h2>
+          <ul class="footer-list">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-title">Our Services</h2>
+          <ul class="footer-list">
+            <li><a href="#services-ceremonies">Ceremonies</a></li>
+            <li><a href="#services-receptions">Receptions</a></li>
+            <li><a href="#services-addons">Add-Ons</a></li>
+            <li><a href="#services-custom">Custom Services</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-title">Location</h2>
+          <ul class="footer-list">
+            <li>Colorado Springs, CO</li>
+            <li>Serving surrounding areas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
     // Solid header once you scroll past the initial hero vibe
@@ -459,36 +842,298 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 
-    // Mobile drawer
-    const body = document.body;
-    const openBtn = document.getElementById("openMenu");
-    const closeBtn = document.getElementById("closeMenu");
-    const drawer = document.getElementById("mobileDrawer");
-    const backdrop = document.getElementById("drawerBackdrop");
+    // Mobile menu
+    const mobileToggle = document.getElementById("openMenu");
+    const mobileMenu = document.getElementById("mobileMenu");
 
-    function setDrawer(open){
-      body.classList.toggle("is-open", open);
-      openBtn.setAttribute("aria-expanded", String(open));
-
-      drawer.hidden = !open;
-      backdrop.hidden = !open;
-
-      if (open) closeBtn.focus();
-      else openBtn.focus();
+    function setMobileMenu(open){
+      if (!mobileMenu || !mobileToggle) return;
+      const isOpen = Boolean(open);
+      mobileMenu.classList.toggle("is-open", isOpen);
+      mobileMenu.hidden = !isOpen;
+      mobileToggle.setAttribute("aria-expanded", String(isOpen));
+      mobileToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
     }
 
-    openBtn?.addEventListener("click", () => setDrawer(true));
-    closeBtn?.addEventListener("click", () => setDrawer(false));
-    backdrop?.addEventListener("click", () => setDrawer(false));
+    mobileToggle?.addEventListener("click", () => {
+      const next = !mobileMenu.classList.contains("is-open");
+      setMobileMenu(next);
+    });
+
+    mobileMenu?.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => setMobileMenu(false));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!mobileMenu || !mobileToggle) return;
+      const isInsideMenu = mobileMenu.contains(event.target);
+      const isToggle = mobileToggle.contains(event.target);
+      const isVisible = mobileMenu.classList.contains("is-open");
+      if (!isVisible) return;
+      if (!isInsideMenu && !isToggle) setMobileMenu(false);
+    });
 
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && body.classList.contains("is-open")) setDrawer(false);
+      if (e.key === "Escape" && mobileMenu?.classList.contains("is-open")) setMobileMenu(false);
     });
 
-    // Close drawer when clicking a link
-    drawer?.querySelectorAll("a").forEach(a => {
-      a.addEventListener("click", () => setDrawer(false));
+    const desktopQuery = window.matchMedia("(min-width: 769px)");
+    desktopQuery.addEventListener("change", (event) => {
+      if (event.matches) setMobileMenu(false);
     });
+
+    // Dropdown interactions for desktop hover/focus and mobile tap
+    (function initNavDropdowns(){
+      const navRoots = Array.from(document.querySelectorAll(".nav"));
+      if (!navRoots.length) return;
+
+      const hoverNoneQuery = window.matchMedia("(hover: none)");
+      const compactWidthQuery = window.matchMedia("(max-width: 900px)");
+      const isTouchMode = () => hoverNoneQuery.matches || compactWidthQuery.matches;
+
+      const closeAll = (except = null) => {
+        navRoots.forEach(root => {
+          root.querySelectorAll(".has-submenu").forEach(item => {
+            if (except && item === except) return;
+            item.classList.remove("is-open");
+            item.querySelector(".nav-link")?.setAttribute("aria-expanded", "false");
+          });
+        });
+      };
+
+      const openItem = (item) => {
+        closeAll(item);
+        item.classList.add("is-open");
+        item.querySelector(".nav-link")?.setAttribute("aria-expanded", "true");
+      };
+
+      navRoots.forEach(root => {
+        root.querySelectorAll(".has-submenu").forEach(item => {
+          const trigger = item.querySelector(".nav-link");
+          const submenu = item.querySelector(".submenu");
+          if (!trigger || !submenu) return;
+
+          trigger.addEventListener("click", (e) => {
+            if (!isTouchMode()) {
+              trigger.setAttribute("aria-expanded", "true");
+              return;
+            }
+            if (!item.classList.contains("is-open")) {
+              e.preventDefault();
+              openItem(item);
+            } else {
+              closeAll();
+            }
+          });
+
+          item.addEventListener("mouseenter", () => {
+            if (isTouchMode()) return;
+            openItem(item);
+          });
+          item.addEventListener("mouseleave", (e) => {
+            if (isTouchMode()) return;
+            if (e && item.contains(e.relatedTarget)) return;
+            if (item.contains(document.activeElement)) return;
+            item.classList.remove("is-open");
+            trigger.setAttribute("aria-expanded", "false");
+          });
+          item.addEventListener("focusin", () => openItem(item));
+          item.addEventListener("focusout", () => {
+            setTimeout(() => {
+              if (!item.contains(document.activeElement)) {
+                item.classList.remove("is-open");
+                trigger.setAttribute("aria-expanded", "false");
+              }
+            }, 0);
+          });
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        const isInsideNav = navRoots.some(root => root.contains(e.target));
+        if (!isInsideNav) closeAll();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeAll();
+      });
+    })();
+
+    // Scroll reveal for experience section
+    (function initScrollReveal(){
+      const targets = Array.from(document.querySelectorAll(".section-heading, .experience-card, .experience-cta"));
+      if (!targets.length || !("IntersectionObserver" in window)) return;
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      targets.forEach(target => target.classList.add("reveal"));
+
+      const cards = Array.from(document.querySelectorAll(".experience-card"));
+      cards.forEach((card, idx) => {
+        card.style.transitionDelay = `${120 + idx * 90}ms`;
+      });
+      document.querySelector(".experience-cta")?.style.setProperty("transition-delay", "320ms");
+
+      const showAll = () => {
+        targets.forEach(target => {
+          target.classList.add("is-visible");
+        });
+      };
+
+      if (reduceMotion.matches) {
+        showAll();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2, rootMargin: "0px 0px -5% 0px" });
+
+      targets.forEach(target => observer.observe(target));
+
+      reduceMotion.addEventListener("change", (event) => {
+        if (event.matches) {
+          observer.disconnect();
+          showAll();
+        }
+      });
+    })();
+
+    // Hero b-roll double-buffer rotation
+    (function initHeroVideoRotation(){
+      const hero = document.querySelector(".hero");
+      const videoBg = document.getElementById("heroVideoBg");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const videoSources = ["img/clip1.mp4", "img/clip2.mp4", "img/clip3.mp4"];
+      const CLIP_DURATION = 10000; // ms
+      const FADE_DURATION = 1200; // ms
+      const CROSSFADE_AT = CLIP_DURATION - FADE_DURATION;
+
+      if (!hero || !videoBg) return;
+
+      const buffers = [
+        videoBg.querySelector(".hero-video--a"),
+        videoBg.querySelector(".hero-video--b")
+      ];
+
+      if (buffers.some(v => !v)) return;
+
+      let activeBuffer = 0;
+      let sourceIndex = 0;
+      let timerId;
+
+      const disableVideoBg = () => {
+        hero.classList.add("video-bg--disabled");
+        clearTimeout(timerId);
+        buffers.forEach(video => {
+          video.pause();
+          video.removeAttribute("src");
+          video.load();
+          video.classList.remove("is-active");
+          video.classList.add("is-idle");
+        });
+      };
+
+      const primeVideo = (video, src) => {
+        if (!video || !src) return;
+        if (video.getAttribute("data-src") === src) return;
+        video.setAttribute("data-src", src);
+        video.src = src;
+        video.load();
+      };
+
+      const scheduleNext = () => {
+        clearTimeout(timerId);
+        timerId = window.setTimeout(() => swapBuffers(), CROSSFADE_AT);
+      };
+
+      const swapBuffers = () => {
+        if (hero.classList.contains("video-bg--disabled")) return;
+
+        const current = buffers[activeBuffer];
+        const idleIndex = 1 - activeBuffer;
+        const idle = buffers[idleIndex];
+        const nextSourceIndex = (sourceIndex + 1) % videoSources.length;
+
+        primeVideo(idle, videoSources[nextSourceIndex]);
+        idle.currentTime = 0;
+
+        const playPromise = idle.play();
+        if (playPromise && typeof playPromise.then === "function") {
+          playPromise.then(() => {
+            current.classList.remove("is-active");
+            current.classList.add("is-idle");
+            idle.classList.add("is-active");
+            idle.classList.remove("is-idle");
+
+            activeBuffer = idleIndex;
+            sourceIndex = nextSourceIndex;
+
+            primeVideo(buffers[1 - activeBuffer], videoSources[(sourceIndex + 1) % videoSources.length]);
+            scheduleNext();
+          }).catch(disableVideoBg);
+        } else {
+          disableVideoBg();
+        }
+      };
+
+      const startPlayback = () => {
+        buffers.forEach(video => {
+          video.muted = true;
+          video.loop = false;
+          video.playsInline = true;
+          video.setAttribute("playsinline", "");
+          video.preload = "metadata";
+          video.classList.add("is-idle");
+          video.addEventListener("ended", swapBuffers, { passive: true });
+        });
+
+        primeVideo(buffers[0], videoSources[sourceIndex]);
+        primeVideo(buffers[1], videoSources[(sourceIndex + 1) % videoSources.length]);
+
+        buffers[0].classList.add("is-active");
+        buffers[0].classList.remove("is-idle");
+
+        const startPromise = buffers[0].play();
+        if (startPromise && typeof startPromise.then === "function") {
+          startPromise.then(scheduleNext).catch(disableVideoBg);
+        } else {
+          disableVideoBg();
+        }
+      };
+
+      if (reduceMotion.matches) {
+        hero.classList.add("video-bg--disabled");
+        return;
+      }
+
+      reduceMotion.addEventListener("change", (event) => {
+        if (event.matches) {
+          disableVideoBg();
+        } else if (hero.classList.contains("video-bg--disabled")) {
+          hero.classList.remove("video-bg--disabled");
+          activeBuffer = 0;
+          sourceIndex = 0;
+          startPlayback();
+        }
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          clearTimeout(timerId);
+          buffers.forEach(video => video.pause());
+        } else if (!hero.classList.contains("video-bg--disabled") && !reduceMotion.matches) {
+          buffers[activeBuffer].play().then(scheduleNext).catch(disableVideoBg);
+        }
+      });
+
+      startPlayback();
+    })();
   </script>
 </body>
 </html>
