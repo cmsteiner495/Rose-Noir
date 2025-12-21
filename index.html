@@ -13,6 +13,7 @@
       --hairline: rgba(255,255,255,.12);
       --glass: rgba(10,10,12,.35);
       --glass-strong: rgba(10,10,12,.68);
+      --gold: #c8a85a;
       --blur: 14px;
       --radius: 18px;
       --max: 1180px;
@@ -79,26 +80,118 @@
       opacity: .92;
     }
 
+    /* Floating pill nav + dropdowns */
     .nav {
       display: none;
-      gap: 18px;
       justify-content: center;
+      align-items: stretch;
+    }
+    .nav-pill{
+      position: relative;
+      display: inline-flex;
       align-items: center;
-      padding: 10px 14px;
+      padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid var(--hairline);
-      background: rgba(0,0,0,.18);
+      background: transparent;
+      border: 1px solid transparent;
+      gap: 4px;
+      transition: background-color .28s ease, border-color .28s ease, box-shadow .28s ease, backdrop-filter .28s ease;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-    .nav a{
-      font-size: 14px;
-      opacity: .86;
-      padding: 8px 10px;
-      border-radius: 999px;
-      transition: opacity .2s ease, background-color .2s ease;
+    .nav-pill:hover,
+    .nav-pill:focus-within{
+      background: rgba(0,0,0,.86);
+      border-color: var(--gold);
+      box-shadow: 0 10px 35px rgba(0,0,0,.28), 0 0 0 1px rgba(200,168,90,.12);
     }
-    .nav a:hover{ opacity: 1; background: rgba(255,255,255,.07); }
+    .nav-list{
+      list-style: none;
+      display: flex;
+      gap: 6px;
+      padding: 0;
+      margin: 0;
+    }
+    .nav-item{
+      position: relative;
+    }
+    .nav-link{
+      font-size: 14px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      opacity: .94;
+      transition: color .22s ease, background-color .22s ease, text-shadow .22s ease;
+    }
+    .nav-link:hover,
+    .nav-link:focus-visible{
+      color: var(--gold);
+      text-shadow: 0 0 14px rgba(200,168,90,.35);
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+    .nav-link:focus-visible{
+      box-shadow: 0 0 0 2px rgba(200,168,90,.55);
+    }
+
+    .submenu{
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translate(-50%, 8px);
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(0,0,0,.92);
+      border: 1px solid var(--gold);
+      border-radius: 14px;
+      box-shadow: 0 20px 45px rgba(0,0,0,.38), 0 0 0 1px rgba(200,168,90,.12);
+      padding: 12px;
+      min-width: 220px;
+      display: grid;
+      gap: 4px;
+      transition: opacity .22s ease, transform .22s ease;
+      z-index: 10;
+    }
+    .has-submenu:hover > .submenu,
+    .has-submenu:focus-within > .submenu,
+    .has-submenu.is-open > .submenu{
+      opacity: 1;
+      transform: translate(-50%, 0);
+      pointer-events: auto;
+    }
+    .submenu::before{
+      content: \"\";
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      width: 18px;
+      height: 12px;
+      transform: translateX(-50%);
+      background: transparent;
+    }
+    .submenu-link{
+      color: var(--text);
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border-left: 2px solid transparent;
+      transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .submenu-link:hover,
+    .submenu-link:focus-visible{
+      color: var(--gold);
+      background: rgba(255,255,255,.05);
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 1px rgba(200,168,90,.18);
+      outline: none;
+    }
+    .submenu a:focus-visible{
+      outline: 2px solid rgba(200,168,90,.65);
+      outline-offset: 2px;
+    }
 
     .header-actions{
       display: inline-flex;
@@ -244,6 +337,12 @@
     @media (prefers-reduced-motion: reduce){
       .hero-video-bg{ display: none; }
       .hero-poster{ opacity: 1; }
+      .nav-pill,
+      .nav-link,
+      .submenu{
+        transition: none;
+        transform: none !important;
+      }
     }
 
     /* Overlay gradient to keep text readable */
@@ -361,13 +460,44 @@
       gap: 8px;
       padding: 6px 0 10px;
     }
-    .drawer nav a{
-      padding: 12px 12px;
+    .drawer-nav .nav-list{
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+    }
+    .drawer-nav .nav-item{
+      position: relative;
+    }
+    .drawer-nav .nav-link{
+      width: 100%;
+      justify-content: space-between;
+      padding: 12px;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
     }
-    .drawer nav a:hover{ background: rgba(255,255,255,.07); }
+    .drawer-nav .nav-link:hover{ background: rgba(255,255,255,.07); }
+    .drawer-nav .submenu{
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: none;
+      opacity: 0;
+      pointer-events: none;
+      margin-top: 6px;
+      background: rgba(0,0,0,.78);
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 1px rgba(200,168,90,.12);
+      width: 100%;
+      min-width: 0;
+    }
+    .drawer-nav .has-submenu.is-open > .submenu,
+    .drawer-nav .has-submenu:focus-within > .submenu{
+      opacity: 1;
+      pointer-events: auto;
+    }
     .drawer .actions{
       display: grid;
       gap: 10px;
@@ -412,11 +542,43 @@
         <span>Your Brand</span>
       </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="#products">Products</a>
-        <a href="#templates">Templates</a>
-        <a href="#resources">Resources</a>
-        <a href="#pricing">Pricing</a>
+      <nav class="nav nav-pill" aria-label="Primary">
+        <ul class="nav-list">
+          <li class="nav-item has-submenu">
+            <a class="nav-link" href="#about" aria-haspopup="true" aria-expanded="false">About</a>
+            <div class="submenu" role="menu" aria-label="About submenu">
+              <a class="submenu-link" role="menuitem" href="#about-know">Get To Know Us</a>
+              <a class="submenu-link" role="menuitem" href="#about-why">Why Choose Rosé Noir</a>
+            </div>
+          </li>
+
+          <li class="nav-item has-submenu">
+            <a class="nav-link" href="#services" aria-haspopup="true" aria-expanded="false">Services</a>
+            <div class="submenu" role="menu" aria-label="Services submenu">
+              <a class="submenu-link" role="menuitem" href="#services-experience">Wedding DJ Experience</a>
+              <a class="submenu-link" role="menuitem" href="#services-addons">Add-Ons</a>
+              <a class="submenu-link" role="menuitem" href="#services-process">Process</a>
+            </div>
+          </li>
+
+          <li class="nav-item has-submenu">
+            <a class="nav-link" href="#portfolio" aria-haspopup="true" aria-expanded="false">Portfolio</a>
+            <div class="submenu" role="menu" aria-label="Portfolio submenu">
+              <a class="submenu-link" role="menuitem" href="#portfolio-ceremony">Ceremony Gallery</a>
+              <a class="submenu-link" role="menuitem" href="#portfolio-reception">Reception Gallery</a>
+              <a class="submenu-link" role="menuitem" href="#portfolio-lighting">Lighting &amp; Visuals</a>
+            </div>
+          </li>
+
+          <li class="nav-item has-submenu">
+            <a class="nav-link" href="#contact" aria-haspopup="true" aria-expanded="false">Contact</a>
+            <div class="submenu" role="menu" aria-label="Contact submenu">
+              <a class="submenu-link" role="menuitem" href="#contact-quote">Request a Quote</a>
+              <a class="submenu-link" role="menuitem" href="#contact-faqs">FAQs</a>
+              <a class="submenu-link" role="menuitem" href="#contact-planning">Planning/Availability</a>
+            </div>
+          </li>
+        </ul>
       </nav>
 
       <div class="header-actions">
@@ -441,11 +603,43 @@
       <button class="btn" id="closeMenu" aria-label="Close menu">Close</button>
     </div>
 
-    <nav aria-label="Mobile Primary">
-      <a href="#products">Products</a>
-      <a href="#templates">Templates</a>
-      <a href="#resources">Resources</a>
-      <a href="#pricing">Pricing</a>
+    <nav class="drawer-nav" aria-label="Mobile Primary">
+      <ul class="nav-list">
+        <li class="nav-item has-submenu">
+          <a class="nav-link" href="#about" aria-haspopup="true" aria-expanded="false">About</a>
+          <div class="submenu" role="menu" aria-label="About submenu">
+            <a class="submenu-link" role="menuitem" href="#about-know">Get To Know Us</a>
+            <a class="submenu-link" role="menuitem" href="#about-why">Why Choose Rosé Noir</a>
+          </div>
+        </li>
+
+        <li class="nav-item has-submenu">
+          <a class="nav-link" href="#services" aria-haspopup="true" aria-expanded="false">Services</a>
+          <div class="submenu" role="menu" aria-label="Services submenu">
+            <a class="submenu-link" role="menuitem" href="#services-experience">Wedding DJ Experience</a>
+            <a class="submenu-link" role="menuitem" href="#services-addons">Add-Ons</a>
+            <a class="submenu-link" role="menuitem" href="#services-process">Process</a>
+          </div>
+        </li>
+
+        <li class="nav-item has-submenu">
+          <a class="nav-link" href="#portfolio" aria-haspopup="true" aria-expanded="false">Portfolio</a>
+          <div class="submenu" role="menu" aria-label="Portfolio submenu">
+            <a class="submenu-link" role="menuitem" href="#portfolio-ceremony">Ceremony Gallery</a>
+            <a class="submenu-link" role="menuitem" href="#portfolio-reception">Reception Gallery</a>
+            <a class="submenu-link" role="menuitem" href="#portfolio-lighting">Lighting &amp; Visuals</a>
+          </div>
+        </li>
+
+        <li class="nav-item has-submenu">
+          <a class="nav-link" href="#contact" aria-haspopup="true" aria-expanded="false">Contact</a>
+          <div class="submenu" role="menu" aria-label="Contact submenu">
+            <a class="submenu-link" role="menuitem" href="#contact-quote">Request a Quote</a>
+            <a class="submenu-link" role="menuitem" href="#contact-faqs">FAQs</a>
+            <a class="submenu-link" role="menuitem" href="#contact-planning">Planning/Availability</a>
+          </div>
+        </li>
+      </ul>
     </nav>
 
     <div class="actions">
@@ -487,10 +681,54 @@
 
   <!-- Demo content -->
   <main>
-    <div class="card" id="products"><strong>Products</strong><br/>Your sections go here…</div>
-    <div class="card" id="templates"><strong>Templates</strong><br/>Your sections go here…</div>
-    <div class="card" id="resources"><strong>Resources</strong><br/>Your sections go here…</div>
-    <div class="card" id="pricing"><strong>Pricing</strong><br/>Your sections go here…</div>
+    <section class="card" id="about">
+      <strong>About</strong><br/>Discover the story and philosophy behind Rosé Noir.
+      <div class="card" id="about-know" style="margin-top:12px;">
+        <strong>Get To Know Us</strong><br/>A snapshot of our team, values, and the artistry that guides every set.
+      </div>
+      <div class="card" id="about-why">
+        <strong>Why Choose Rosé Noir</strong><br/>What sets our approach apart for couples who want a cinematic celebration.
+      </div>
+    </section>
+
+    <section class="card" id="services">
+      <strong>Services</strong><br/>A premium wedding DJ experience tailored to your night.
+      <div class="card" id="services-experience" style="margin-top:12px;">
+        <strong>Wedding DJ Experience</strong><br/>Curated music direction, seamless flow, and immersive sound.
+      </div>
+      <div class="card" id="services-addons">
+        <strong>Add-Ons</strong><br/>Lighting, photo moments, and bespoke touches to elevate the energy.
+      </div>
+      <div class="card" id="services-process">
+        <strong>Process</strong><br/>How we collaborate from inquiry to last dance, with clear milestones.
+      </div>
+    </section>
+
+    <section class="card" id="portfolio">
+      <strong>Portfolio</strong><br/>Recent celebrations, curated moments, and signature looks.
+      <div class="card" id="portfolio-ceremony" style="margin-top:12px;">
+        <strong>Ceremony Gallery</strong><br/>Refined ceremony soundscapes and aisle-ready ambiance.
+      </div>
+      <div class="card" id="portfolio-reception">
+        <strong>Reception Gallery</strong><br/>Packed dance floors, unforgettable transitions, and guest energy.
+      </div>
+      <div class="card" id="portfolio-lighting">
+        <strong>Lighting &amp; Visuals</strong><br/>Atmospheric lighting, visuals, and modern stage design.
+      </div>
+    </section>
+
+    <section class="card" id="contact">
+      <strong>Contact</strong><br/>Plan your date, get answers, and start designing your soundtrack.
+      <div class="card" id="contact-quote" style="margin-top:12px;">
+        <strong>Request a Quote</strong><br/>Share your details for a tailored proposal and availability check.
+      </div>
+      <div class="card" id="contact-faqs">
+        <strong>FAQs</strong><br/>Quick answers to timelines, equipment, travel, and more.
+      </div>
+      <div class="card" id="contact-planning">
+        <strong>Planning/Availability</strong><br/>Coordinate your timeline and confirm key moments with ease.
+      </div>
+    </section>
   </main>
 
   <script>
@@ -533,8 +771,87 @@
 
     // Close drawer when clicking a link
     drawer?.querySelectorAll("a").forEach(a => {
-      a.addEventListener("click", () => setDrawer(false));
+      a.addEventListener("click", (event) => {
+        if (!event.defaultPrevented) setDrawer(false);
+      });
     });
+
+    // Dropdown interactions for desktop hover/focus and mobile tap
+    (function initNavDropdowns(){
+      const navRoots = Array.from(document.querySelectorAll(".nav, .drawer-nav"));
+      if (!navRoots.length) return;
+
+      const hoverNoneQuery = window.matchMedia("(hover: none)");
+      const compactWidthQuery = window.matchMedia("(max-width: 900px)");
+      const isTouchMode = () => hoverNoneQuery.matches || compactWidthQuery.matches;
+
+      const closeAll = (except = null) => {
+        navRoots.forEach(root => {
+          root.querySelectorAll(".has-submenu").forEach(item => {
+            if (except && item === except) return;
+            item.classList.remove("is-open");
+            item.querySelector(".nav-link")?.setAttribute("aria-expanded", "false");
+          });
+        });
+      };
+
+      const openItem = (item) => {
+        closeAll(item);
+        item.classList.add("is-open");
+        item.querySelector(".nav-link")?.setAttribute("aria-expanded", "true");
+      };
+
+      navRoots.forEach(root => {
+        root.querySelectorAll(".has-submenu").forEach(item => {
+          const trigger = item.querySelector(".nav-link");
+          const submenu = item.querySelector(".submenu");
+          if (!trigger || !submenu) return;
+
+          trigger.addEventListener("click", (e) => {
+            if (!isTouchMode()) {
+              trigger.setAttribute("aria-expanded", "true");
+              return;
+            }
+            if (!item.classList.contains("is-open")) {
+              e.preventDefault();
+              openItem(item);
+            } else {
+              closeAll();
+            }
+          });
+
+          item.addEventListener("mouseenter", () => {
+            if (isTouchMode()) return;
+            openItem(item);
+          });
+          item.addEventListener("mouseleave", () => {
+            if (isTouchMode()) return;
+            if (!item.contains(document.activeElement)) {
+              item.classList.remove("is-open");
+              trigger.setAttribute("aria-expanded", "false");
+            }
+          });
+          item.addEventListener("focusin", () => openItem(item));
+          item.addEventListener("focusout", () => {
+            setTimeout(() => {
+              if (!item.contains(document.activeElement)) {
+                item.classList.remove("is-open");
+                trigger.setAttribute("aria-expanded", "false");
+              }
+            }, 0);
+          });
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        const isInsideNav = navRoots.some(root => root.contains(e.target));
+        if (!isInsideNav) closeAll();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeAll();
+      });
+    })();
 
     // Hero b-roll double-buffer rotation
     (function initHeroVideoRotation(){
