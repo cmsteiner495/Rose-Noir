@@ -70,9 +70,8 @@
     }
     .logo-mark{
       width: 28px; height: 28px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(255,255,255,.35));
-      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+      display: block;
+      object-fit: contain;
     }
     .brand span{
       letter-spacing: .02em;
@@ -538,8 +537,8 @@
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
       <a class="brand" href="#">
-        <div class="logo-mark" aria-hidden="true"></div>
-        <span>Your Brand</span>
+        <img class="logo-mark" src="img/RNtransparent.png" alt="Rosé Noir logo" />
+        <span>Rosé Noir</span>
       </a>
 
       <nav class="nav nav-pill" aria-label="Primary">
@@ -582,7 +581,6 @@
       </nav>
 
       <div class="header-actions">
-        <a class="btn" href="#login">Log in</a>
         <a class="btn primary" href="#get-started">Get started</a>
 
         <button class="btn hamburger" id="openMenu" aria-label="Open menu" aria-controls="mobileDrawer" aria-expanded="false">
@@ -597,8 +595,8 @@
   <section class="drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
     <div class="row">
       <div class="brand" style="min-width:auto">
-        <div class="logo-mark" aria-hidden="true"></div>
-        <span>Your Brand</span>
+        <img class="logo-mark" src="img/RNtransparent.png" alt="Rosé Noir logo" />
+        <span>Rosé Noir</span>
       </div>
       <button class="btn" id="closeMenu" aria-label="Close menu">Close</button>
     </div>
@@ -643,7 +641,6 @@
     </nav>
 
     <div class="actions">
-      <a class="btn" href="#login">Log in</a>
       <a class="btn primary" href="#get-started">Get started</a>
     </div>
   </section>
@@ -661,20 +658,14 @@
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="hero-content">
-      <div class="kicker">Create • Sell • Grow</div>
-      <h1 class="headline">A website makes it real.</h1>
+      <h1 class="headline">Cinematic soundtracks for unforgettable weddings.</h1>
       <p class="subhead">
-        Build a premium, modern presence with a cinematic hero and a clean, confident header—without the clutter.
+        Rosé Noir shapes the atmosphere with romantic storytelling, intentional pacing, and immersive energy so every vow, toast, and dance feels effortlessly elevated.
       </p>
 
       <div class="hero-cta">
         <a class="btn primary" href="#get-started">Get started</a>
-        <a class="btn" href="#learn-more">Explore features</a>
-      </div>
-
-      <div class="scroll-hint">
-        <span class="dot" aria-hidden="true"></span>
-        <span>Scroll for more</span>
+        <a class="btn" href="#learn-more">View Portfolio</a>
       </div>
     </div>
   </section>
