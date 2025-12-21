@@ -114,6 +114,14 @@
     .nav-item{
       position: relative;
     }
+    .has-submenu::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 16px;
+    }
     .nav-link{
       font-size: 14px;
       padding: 9px 14px;
@@ -529,6 +537,49 @@
       padding: 22px;
       margin: 0 0 18px;
     }
+
+    /* Footer */
+    footer{
+      margin-top: 80px;
+      background: var(--bg);
+      color: var(--muted);
+      padding: 48px var(--pad) 56px;
+    }
+    .footer-inner{
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 28px;
+    }
+    .footer-grid{
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .footer-title{
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+      color: rgba(244,244,245,.64);
+    }
+    .footer-list{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .footer-list a{
+      color: inherit;
+    }
+    .footer-list a:hover,
+    .footer-list a:focus-visible{
+      color: var(--gold);
+      outline: none;
+    }
   </style>
 </head>
 
@@ -548,15 +599,18 @@
             <div class="submenu" role="menu" aria-label="About submenu">
               <a class="submenu-link" role="menuitem" href="#about-know">Get To Know Us</a>
               <a class="submenu-link" role="menuitem" href="#about-why">Why Choose Rosé Noir</a>
+              <a class="submenu-link" role="menuitem" href="#about-experience">The Wedding Experience</a>
+              <a class="submenu-link" role="menuitem" href="#about-process">Process</a>
             </div>
           </li>
 
           <li class="nav-item has-submenu">
             <a class="nav-link" href="#services" aria-haspopup="true" aria-expanded="false">Services</a>
             <div class="submenu" role="menu" aria-label="Services submenu">
-              <a class="submenu-link" role="menuitem" href="#services-experience">Wedding DJ Experience</a>
+              <a class="submenu-link" role="menuitem" href="#services-ceremonies">Ceremonies</a>
+              <a class="submenu-link" role="menuitem" href="#services-receptions">Receptions</a>
               <a class="submenu-link" role="menuitem" href="#services-addons">Add-Ons</a>
-              <a class="submenu-link" role="menuitem" href="#services-process">Process</a>
+              <a class="submenu-link" role="menuitem" href="#services-custom">Custom Services</a>
             </div>
           </li>
 
@@ -608,15 +662,18 @@
           <div class="submenu" role="menu" aria-label="About submenu">
             <a class="submenu-link" role="menuitem" href="#about-know">Get To Know Us</a>
             <a class="submenu-link" role="menuitem" href="#about-why">Why Choose Rosé Noir</a>
+            <a class="submenu-link" role="menuitem" href="#about-experience">The Wedding Experience</a>
+            <a class="submenu-link" role="menuitem" href="#about-process">Process</a>
           </div>
         </li>
 
         <li class="nav-item has-submenu">
           <a class="nav-link" href="#services" aria-haspopup="true" aria-expanded="false">Services</a>
           <div class="submenu" role="menu" aria-label="Services submenu">
-            <a class="submenu-link" role="menuitem" href="#services-experience">Wedding DJ Experience</a>
+            <a class="submenu-link" role="menuitem" href="#services-ceremonies">Ceremonies</a>
+            <a class="submenu-link" role="menuitem" href="#services-receptions">Receptions</a>
             <a class="submenu-link" role="menuitem" href="#services-addons">Add-Ons</a>
-            <a class="submenu-link" role="menuitem" href="#services-process">Process</a>
+            <a class="submenu-link" role="menuitem" href="#services-custom">Custom Services</a>
           </div>
         </li>
 
@@ -658,9 +715,9 @@
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="hero-content">
-      <h1 class="headline">Cinematic soundtracks for unforgettable weddings.</h1>
+      <h1 class="headline">A cinematic soundtrack for the night your vows become legend.</h1>
       <p class="subhead">
-        Rosé Noir shapes the atmosphere with romantic storytelling, intentional pacing, and immersive energy so every vow, toast, and dance feels effortlessly elevated.
+        Intentional pacing, intimate atmosphere, and every beat timed to the emotion of the room. The moments linger; the night feels inevitable.
       </p>
 
       <div class="hero-cta">
@@ -680,18 +737,27 @@
       <div class="card" id="about-why">
         <strong>Why Choose Rosé Noir</strong><br/>What sets our approach apart for couples who want a cinematic celebration.
       </div>
+      <div class="card" id="about-experience">
+        <strong>The Wedding Experience</strong><br/>How we orchestrate the evening so each chapter flows like a film.
+      </div>
+      <div class="card" id="about-process">
+        <strong>Process</strong><br/>From first conversation to last dance, every detail handled with intention.
+      </div>
     </section>
 
     <section class="card" id="services">
       <strong>Services</strong><br/>A premium wedding DJ experience tailored to your night.
-      <div class="card" id="services-experience" style="margin-top:12px;">
-        <strong>Wedding DJ Experience</strong><br/>Curated music direction, seamless flow, and immersive sound.
+      <div class="card" id="services-ceremonies" style="margin-top:12px;">
+        <strong>Ceremonies</strong><br/>Refined aisle sound, gentle pacing, and vows carried with clarity.
+      </div>
+      <div class="card" id="services-receptions">
+        <strong>Receptions</strong><br/>Dinner scores, effortless transitions, and dance floors that never lose momentum.
       </div>
       <div class="card" id="services-addons">
         <strong>Add-Ons</strong><br/>Lighting, photo moments, and bespoke touches to elevate the energy.
       </div>
-      <div class="card" id="services-process">
-        <strong>Process</strong><br/>How we collaborate from inquiry to last dance, with clear milestones.
+      <div class="card" id="services-custom">
+        <strong>Custom Services</strong><br/>Tailored experiences for unique venues, timelines, and visions.
       </div>
     </section>
 
@@ -721,6 +787,44 @@
       </div>
     </section>
   </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div>
+          <h2 class="footer-title">Contact Us</h2>
+          <ul class="footer-list">
+            <li>Rosé Noir</li>
+            <li>Email placeholder</li>
+            <li><a href="#contact-quote">Request a Quote</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-title">Follow Us</h2>
+          <ul class="footer-list">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-title">Our Services</h2>
+          <ul class="footer-list">
+            <li><a href="#services-ceremonies">Ceremonies</a></li>
+            <li><a href="#services-receptions">Receptions</a></li>
+            <li><a href="#services-addons">Add-Ons</a></li>
+            <li><a href="#services-custom">Custom Services</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-title">Location</h2>
+          <ul class="footer-list">
+            <li>Colorado Springs, CO</li>
+            <li>Serving surrounding areas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
     // Solid header once you scroll past the initial hero vibe
@@ -815,12 +919,12 @@
             if (isTouchMode()) return;
             openItem(item);
           });
-          item.addEventListener("mouseleave", () => {
+          item.addEventListener("mouseleave", (e) => {
             if (isTouchMode()) return;
-            if (!item.contains(document.activeElement)) {
-              item.classList.remove("is-open");
-              trigger.setAttribute("aria-expanded", "false");
-            }
+            if (e && item.contains(e.relatedTarget)) return;
+            if (item.contains(document.activeElement)) return;
+            item.classList.remove("is-open");
+            trigger.setAttribute("aria-expanded", "false");
           });
           item.addEventListener("focusin", () => openItem(item));
           item.addEventListener("focusout", () => {
