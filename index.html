@@ -180,22 +180,70 @@
       inset: 0;
       z-index: 0;
       background: #0f0f12;
+      overflow: hidden;
     }
 
-    .hero-media video,
-    .hero-media img{
+    .hero-video-bg{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .hero-video{
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       transform: scale(1.03);
       filter: saturate(1.05) contrast(1.02);
+      opacity: 0;
+      transition: opacity 1.15s ease;
+      background: #0f0f12;
     }
 
-    /* If user prefers reduced motion, hide video and show poster. */
-    .hero-media img{ display: none; }
+    .hero-video.is-active{
+      opacity: 1;
+      z-index: 1;
+    }
+    .hero-video.is-idle{
+      opacity: 0;
+      z-index: 0;
+    }
+
+    .hero-video-overlay{
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.65));
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: normal;
+    }
+
+    .hero-poster{
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(255,255,255,.05), transparent 55%),
+        linear-gradient(140deg, #101017 0%, #050507 48%, #0b0b0c 100%);
+      transform: scale(1.03);
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    .video-bg--disabled .hero-video-bg{
+      display: none;
+    }
+    .video-bg--disabled .hero-poster{
+      opacity: 1;
+    }
+
     @media (prefers-reduced-motion: reduce){
-      .hero-media video{ display: none; }
-      .hero-media img{ display: block; }
+      .hero-video-bg{ display: none; }
+      .hero-poster{ opacity: 1; }
     }
 
     /* Overlay gradient to keep text readable */
@@ -409,14 +457,12 @@
   <!-- Hero -->
   <section class="hero" aria-label="Hero">
     <div class="hero-media" aria-hidden="true">
-      <!-- Use BOTH mp4 and webm if you can. poster is critical for perceived speed. -->
-      <video autoplay muted playsinline loop preload="metadata" poster="assets/hero-poster.jpg">
-        <source src="assets/hero-broll.webm" type="video/webm" />
-        <source src="assets/hero-broll.mp4" type="video/mp4" />
-      </video>
-
-      <!-- Fallback image for reduced-motion users -->
-      <img src="assets/hero-poster.jpg" alt="" />
+      <div class="hero-video-bg" id="heroVideoBg">
+        <video class="hero-video hero-video--a is-idle" muted playsinline preload="metadata"></video>
+        <video class="hero-video hero-video--b is-idle" muted playsinline preload="metadata"></video>
+        <div class="hero-video-overlay"></div>
+      </div>
+      <div class="hero-poster" aria-hidden="true"></div>
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -489,6 +535,137 @@
     drawer?.querySelectorAll("a").forEach(a => {
       a.addEventListener("click", () => setDrawer(false));
     });
+
+    // Hero b-roll double-buffer rotation
+    (function initHeroVideoRotation(){
+      const hero = document.querySelector(".hero");
+      const videoBg = document.getElementById("heroVideoBg");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const videoSources = ["img/clip1.mp4", "img/clip2.mp4", "img/clip3.mp4"];
+      const CLIP_DURATION = 10000; // ms
+      const FADE_DURATION = 1200; // ms
+      const CROSSFADE_AT = CLIP_DURATION - FADE_DURATION;
+
+      if (!hero || !videoBg) return;
+
+      const buffers = [
+        videoBg.querySelector(".hero-video--a"),
+        videoBg.querySelector(".hero-video--b")
+      ];
+
+      if (buffers.some(v => !v)) return;
+
+      let activeBuffer = 0;
+      let sourceIndex = 0;
+      let timerId;
+
+      const disableVideoBg = () => {
+        hero.classList.add("video-bg--disabled");
+        clearTimeout(timerId);
+        buffers.forEach(video => {
+          video.pause();
+          video.removeAttribute("src");
+          video.load();
+          video.classList.remove("is-active");
+          video.classList.add("is-idle");
+        });
+      };
+
+      const primeVideo = (video, src) => {
+        if (!video || !src) return;
+        if (video.getAttribute("data-src") === src) return;
+        video.setAttribute("data-src", src);
+        video.src = src;
+        video.load();
+      };
+
+      const scheduleNext = () => {
+        clearTimeout(timerId);
+        timerId = window.setTimeout(() => swapBuffers(), CROSSFADE_AT);
+      };
+
+      const swapBuffers = () => {
+        if (hero.classList.contains("video-bg--disabled")) return;
+
+        const current = buffers[activeBuffer];
+        const idleIndex = 1 - activeBuffer;
+        const idle = buffers[idleIndex];
+        const nextSourceIndex = (sourceIndex + 1) % videoSources.length;
+
+        primeVideo(idle, videoSources[nextSourceIndex]);
+        idle.currentTime = 0;
+
+        const playPromise = idle.play();
+        if (playPromise && typeof playPromise.then === "function") {
+          playPromise.then(() => {
+            current.classList.remove("is-active");
+            current.classList.add("is-idle");
+            idle.classList.add("is-active");
+            idle.classList.remove("is-idle");
+
+            activeBuffer = idleIndex;
+            sourceIndex = nextSourceIndex;
+
+            primeVideo(buffers[1 - activeBuffer], videoSources[(sourceIndex + 1) % videoSources.length]);
+            scheduleNext();
+          }).catch(disableVideoBg);
+        } else {
+          disableVideoBg();
+        }
+      };
+
+      const startPlayback = () => {
+        buffers.forEach(video => {
+          video.muted = true;
+          video.loop = false;
+          video.playsInline = true;
+          video.setAttribute("playsinline", "");
+          video.preload = "metadata";
+          video.classList.add("is-idle");
+          video.addEventListener("ended", swapBuffers, { passive: true });
+        });
+
+        primeVideo(buffers[0], videoSources[sourceIndex]);
+        primeVideo(buffers[1], videoSources[(sourceIndex + 1) % videoSources.length]);
+
+        buffers[0].classList.add("is-active");
+        buffers[0].classList.remove("is-idle");
+
+        const startPromise = buffers[0].play();
+        if (startPromise && typeof startPromise.then === "function") {
+          startPromise.then(scheduleNext).catch(disableVideoBg);
+        } else {
+          disableVideoBg();
+        }
+      };
+
+      if (reduceMotion.matches) {
+        hero.classList.add("video-bg--disabled");
+        return;
+      }
+
+      reduceMotion.addEventListener("change", (event) => {
+        if (event.matches) {
+          disableVideoBg();
+        } else if (hero.classList.contains("video-bg--disabled")) {
+          hero.classList.remove("video-bg--disabled");
+          activeBuffer = 0;
+          sourceIndex = 0;
+          startPlayback();
+        }
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          clearTimeout(timerId);
+          buffers.forEach(video => video.pause());
+        } else if (!hero.classList.contains("video-bg--disabled") && !reduceMotion.matches) {
+          buffers[activeBuffer].play().then(scheduleNext).catch(disableVideoBg);
+        }
+      });
+
+      startPlayback();
+    })();
   </script>
 </body>
 </html>
