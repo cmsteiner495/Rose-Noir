@@ -3,33 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rosé Noir | Colorado Springs Wedding DJ &amp; Lighting</title>
-  <meta name="description" content="Rosé Noir delivers luxury Colorado Springs wedding DJ and lighting experiences with curated music, immersive production, and elevated energy for your celebration." />
+  <title>Contact | Rosé Noir Weddings</title>
+  <meta name="description" content="Request a quote or check availability with Rosé Noir for luxury Colorado Springs wedding DJ and lighting." />
   <link rel="icon" type="image/png" href="img/RNtransparent.png" />
   <link rel="apple-touch-icon" href="img/RNtransparent.png" />
   <meta name="theme-color" content="#000000" />
-  <meta property="og:title" content="Rosé Noir | Colorado Springs Wedding DJ &amp; Lighting" />
-  <meta property="og:description" content="Rosé Noir delivers luxury Colorado Springs wedding DJ and lighting experiences with curated music, immersive production, and elevated energy for your celebration." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="img/creative.webp" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rosé Noir | Colorado Springs Wedding DJ &amp; Lighting" />
-  <meta name="twitter:description" content="Rosé Noir delivers luxury Colorado Springs wedding DJ and lighting experiences with curated music, immersive production, and elevated energy for your celebration." />
-  <meta name="twitter:image" content="img/creative.webp" />
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "EntertainmentBusiness",
-      "name": "Rosé Noir",
-      "areaServed": "Colorado Springs, CO",
-      "description": "Rosé Noir delivers luxury Colorado Springs wedding DJ and lighting experiences with curated music, immersive production, and elevated energy for your celebration."
-    }
-  </script>
   <link rel="stylesheet" href="/main.css" />
 </head>
-
 <body class="page-fade">
-  <!-- Header -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
       <a class="brand" href="/">
@@ -126,70 +107,103 @@
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero" aria-label="Hero">
+  <section class="hero is-secondary" aria-label="Contact Rosé Noir">
     <div class="hero-media" aria-hidden="true">
-      <div class="hero-video-bg" id="heroVideoBg">
-        <video class="hero-video rn-hero-video hero-video--a is-idle" muted playsinline preload="metadata"></video>
-        <video class="hero-video rn-hero-video hero-video--b is-idle" muted playsinline preload="metadata"></video>
-        <div class="hero-video-overlay"></div>
-      </div>
       <div class="hero-poster" aria-hidden="true"></div>
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="hero-content">
-      <span class="kicker">Colorado Springs, CO</span>
-      <h1 class="headline">The Sound of Forever.</h1>
-      <p class="subhead">
-        Elegantly crafted to bring your wedding vision to life with curated sound, immersive lighting, and a refined energy from vows to last dance.
-      </p>
-
+      <span class="kicker">Contact</span>
+      <h1 class="headline">Let’s design your soundtrack.</h1>
+      <p class="subhead">Share your date, venue, and vision. We’ll craft a tailored DJ and lighting plan and confirm availability.</p>
       <div class="hero-cta">
-        <a class="btn primary" href="/contact.html#request-a-quote">Get started</a>
-        <a class="btn" href="/portfolio.html">View Portfolio</a>
-      </div>
-      <div class="scroll-hint">
-        <span class="dot" aria-hidden="true"></span> Glide into the Rosé Noir experience
+        <a class="btn primary" href="#request-a-quote">Start the form</a>
+        <a class="btn" href="/services.html">Review services</a>
       </div>
     </div>
   </section>
 
-  <!-- Experience Overview -->
   <main>
-    <section class="section-heading reveal">
-      <h2>The Rosé Noir Experience</h2>
-      <p>Based in Colorado Springs, CO, Rosé Noir delivers premium wedding DJ and lighting that feels cinematic. We choreograph every cue so your celebration moves effortlessly.</p>
+    <span class="anchor-target" id="request-a-quote" aria-hidden="true"></span>
+    <section class="page-section reveal">
+      <h2 class="section-title">Request a Quote</h2>
+      <p class="section-lead">Tell us about your celebration. We respond quickly with availability and a curated plan.</p>
+      <div class="contact-grid">
+        <form class="reveal" action="https://formspree.io/f/mldrqgvp" method="POST" data-redirect="/thank-you.html">
+          <input type="hidden" name="_redirect" value="/thank-you.html" />
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required placeholder="Your full name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label for="date">Event Date</label>
+            <input id="date" name="date" type="date" />
+          </div>
+          <div class="form-group">
+            <label for="venue">Venue</label>
+            <input id="venue" name="venue" type="text" placeholder="Venue name / location" />
+          </div>
+          <div class="form-group">
+            <label for="services">Services Interested In</label>
+            <select id="services" name="services">
+              <option value="Ceremony">Ceremony</option>
+              <option value="Reception">Reception</option>
+              <option value="Lighting">Lighting</option>
+              <option value="Full Experience">Full Experience</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell us about your vision</label>
+            <textarea id="message" name="message" placeholder="Style, energy, requests"></textarea>
+          </div>
+          <button class="btn primary" type="submit">Submit</button>
+        </form>
+        <div class="highlight-card">
+          <strong>Response time</strong>
+          <p class="section-lead">We typically respond within one business day with availability and next steps.</p>
+          <strong>Coverage</strong>
+          <p class="section-lead">Colorado Springs and surrounding areas. Travel available by request.</p>
+          <div class="pill-row">
+            <span class="pill">Timeline support</span>
+            <span class="pill">MC services</span>
+            <span class="pill">Lighting design</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <div class="experience-grid">
-      <article class="experience-card reveal" aria-label="Ceremony" id="get-to-know-us">
-        <img src="img/ceremony.webp" alt="Outdoor wedding ceremony with aisle view">
-        <div class="card-body">
-          <h3>Intentional Ceremonies</h3>
-          <p>Pristine audio, elegant pacing, and discreet direction so every vow is heard and felt.</p>
+    <span class="anchor-target" id="faqs" aria-hidden="true"></span>
+    <section class="page-section reveal">
+      <h2 class="section-title">FAQs</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>How early should we book?</h3>
+          <p>12-18 months ahead is ideal. Reach out anytime to check availability—we’ll confirm quickly.</p>
         </div>
-      </article>
+        <div class="faq-item">
+          <h3>Can you help with the timeline?</h3>
+          <p>Yes. We partner with planners to pace entrances, speeches, and dance sets with seamless audio cues.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do you travel?</h3>
+          <p>We are based in Colorado Springs and travel for mountain venues and destination weddings on request.</p>
+        </div>
+      </div>
+    </section>
 
-      <article class="experience-card reveal" aria-label="Reception" id="why-choose-rose-noir">
-        <img src="img/reception.webp" alt="Wedding reception dance floor with lighting">
-        <div class="card-body">
-          <h3>Elevated Receptions</h3>
-          <p>Seasoned DJs who read the room, keep the flow, and sustain a dance floor that never dips.</p>
-        </div>
-      </article>
-
-      <article class="experience-card reveal" aria-label="Creative Elements" id="the-wedding-experience">
-        <img src="img/creative.webp" alt="Creative lighting setup for wedding celebration">
-        <div class="card-body">
-          <h3>Creative Enhancements</h3>
-          <p>Lighting, visuals, and custom moments that feel personal and luxe without ever overpowering the story.</p>
-        </div>
-      </article>
-    </div>
-    <div class="experience-cta reveal" id="process">
-      <a class="btn book-now" href="/contact.html#request-a-quote">Book Now</a>
-    </div>
+    <span class="anchor-target" id="planning-availability" aria-hidden="true"></span>
+    <section class="page-section reveal">
+      <h2 class="section-title">Planning &amp; Availability</h2>
+      <p class="section-lead">Share your date to secure your DJ and lighting team. We’ll reserve your production crew and finalize design details as your plans evolve.</p>
+      <div class="experience-cta" style="justify-content: flex-start;">
+        <a class="btn book-now" href="/thank-you.html">View our confirmation page</a>
+      </div>
+    </section>
   </main>
 
   <div class="section-divider" aria-hidden="true"></div>
@@ -230,7 +244,6 @@
       </div>
     </div>
   </footer>
-
   <script src="/main.js"></script>
 </body>
 </html>
