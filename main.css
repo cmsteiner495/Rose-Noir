@@ -158,6 +158,20 @@ body.page-fade.is-loaded{
   opacity: 0;
   pointer-events: none;
 }
+.mobile-menu > div{
+  position: relative;
+}
+.mobile-menu > div:not(:last-child)::after{
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -2px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .35;
+  pointer-events: none;
+}
 .mobile-menu .submenu-link{
   display: flex;
   align-items: center;
