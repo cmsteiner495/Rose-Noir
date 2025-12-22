@@ -153,7 +153,7 @@ body.page-fade.is-loaded{
   left: auto;
   min-width: 260px;
   display: grid;
-  gap: 4px;
+  gap: 0;
   transform: translateY(8px);
   opacity: 0;
   pointer-events: none;
@@ -164,12 +164,12 @@ body.page-fade.is-loaded{
 .mobile-menu > div:not(:last-child)::after{
   content: "";
   position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: -2px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 1px;
   background: var(--gold);
-  opacity: .35;
+  opacity: .4;
   pointer-events: none;
 }
 .mobile-menu .submenu-link{
@@ -178,6 +178,19 @@ body.page-fade.is-loaded{
   justify-content: space-between;
   width: 100%;
   gap: 8px;
+  padding: 12px 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: left;
+}
+.mobile-menu .submenu-link:hover,
+.mobile-menu .submenu-link:focus-visible{
+  color: var(--gold);
+  background: none;
+  border-color: transparent;
+  box-shadow: none;
 }
 .mobile-menu.is-open{
   opacity: 1;
@@ -214,6 +227,7 @@ body.page-fade.is-loaded{
   left: auto;
   right: 0;
   transform: translateY(8px);
+  gap: 0;
 }
 .mobile-menu.submenu::before{
   left: auto;
