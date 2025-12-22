@@ -764,6 +764,30 @@ main{
   color: rgba(255,255,255,.88);
   font-size: 14px;
 }
+.why-card-grid{
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.why-card{
+  padding: 16px 16px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  box-shadow: 0 14px 32px rgba(0,0,0,.32);
+  display: grid;
+  gap: 8px;
+}
+.why-card-title{
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -.01em;
+}
+.why-card p{
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
 .grid-cards{
   display: grid;
   gap: 14px;
