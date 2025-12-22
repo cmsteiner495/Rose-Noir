@@ -3,7 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hero + Header (Squarespace-style)</title>
+  <title>Rosé Noir | Colorado Springs Wedding DJ &amp; Lighting</title>
+  <meta name="description" content="Rosé Noir delivers luxury Colorado Springs wedding DJ and lighting experiences with curated music, immersive production, and elevated energy for your celebration." />
+  <link rel="canonical" href="/" />
+  <link rel="icon" type="image/png" href="img/RNtransparent.png" />
+  <link rel="apple-touch-icon" href="img/RNtransparent.png" />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="Rosé Noir | Colorado Springs Wedding DJ &amp; Lighting" />
+  <meta property="og:description" content="Rosé Noir delivers luxury Colorado Springs wedding DJ and lighting experiences with curated music, immersive production, and elevated energy for your celebration." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="img/creative.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rosé Noir | Colorado Springs Wedding DJ &amp; Lighting" />
+  <meta name="twitter:description" content="Rosé Noir delivers luxury Colorado Springs wedding DJ and lighting experiences with curated music, immersive production, and elevated energy for your celebration." />
+  <meta name="twitter:image" content="img/creative.webp" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EntertainmentBusiness",
+      "name": "Rosé Noir",
+      "areaServed": "Colorado Springs, CO",
+      "description": "Rosé Noir delivers luxury Colorado Springs wedding DJ and lighting experiences with curated music, immersive production, and elevated energy for your celebration."
+    }
+  </script>
 
   <style>
     :root{
@@ -335,12 +357,16 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
       transform: scale(1.03);
       filter: saturate(1.05) contrast(1.02);
       opacity: 0;
       transition: opacity 1.15s ease;
       background: #0f0f12;
+    }
+
+    .rn-hero-video{
+      object-fit: cover;
+      object-position: center center;
     }
 
     .hero-video.is-active{
@@ -378,6 +404,12 @@
     }
     .video-bg--disabled .hero-poster{
       opacity: 1;
+    }
+
+    @media (max-width: 640px){
+      .rn-hero-video{
+        object-position: 60% center;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -719,8 +751,8 @@
   <section class="hero" aria-label="Hero">
     <div class="hero-media" aria-hidden="true">
       <div class="hero-video-bg" id="heroVideoBg">
-        <video class="hero-video hero-video--a is-idle" muted playsinline preload="metadata"></video>
-        <video class="hero-video hero-video--b is-idle" muted playsinline preload="metadata"></video>
+        <video class="hero-video rn-hero-video hero-video--a is-idle" muted playsinline preload="metadata"></video>
+        <video class="hero-video rn-hero-video hero-video--b is-idle" muted playsinline preload="metadata"></video>
         <div class="hero-video-overlay"></div>
       </div>
       <div class="hero-poster" aria-hidden="true"></div>
